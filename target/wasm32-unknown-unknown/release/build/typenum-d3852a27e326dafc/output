@@ -1,0 +1,2 @@
+cargo:rustc-env=TYPENUM_BUILD_CONSTS=/Users/komalshahid/my-snip721/target/wasm32-unknown-unknown/release/build/typenum-d3852a27e326dafc/out/consts.rs
+cargo:rustc-env=TYPENUM_BUILD_OP=/Users/komalshahid/my-snip721/target/wasm32-unknown-unknown/release/build/typenum-d3852a27e326dafc/out/op.rs

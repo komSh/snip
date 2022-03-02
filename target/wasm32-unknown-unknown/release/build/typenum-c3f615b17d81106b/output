@@ -1,0 +1,2 @@
+cargo:rustc-env=TYPENUM_BUILD_CONSTS=/contract/target/wasm32-unknown-unknown/release/build/typenum-c3f615b17d81106b/out/consts.rs
+cargo:rustc-env=TYPENUM_BUILD_OP=/contract/target/wasm32-unknown-unknown/release/build/typenum-c3f615b17d81106b/out/op.rs
