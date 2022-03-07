@@ -73,20 +73,71 @@ const {
           throw new Error(`Could not execute contract: ${err}`);
         });
       console.log("response: ", response);
-    const token_id = response.token_list.tokens[0];
+    const token_id = response.token_list.tokens[6];
   
     if (response.token_list.tokens.length == 0)
       console.log(
         'No token was found for you account, make sure that the minting step completed successfully'
       );
 
-  
-    // 2. Query the public metadata
-    queryMsg = {
-        nft_info: {
+   
+      query_message = {
+        "approve": {
+          "spender": "secret1dmuv6cvquvkejelhneuvfxzdck4uk48cqnzc4h",
           token_id: token_id,
-        },
-      };
+          
+        }
+      }
+
+      response = await client
+        .execute(process.env.SECRET_NFT_CONTRACT, query_message)
+        .catch((err) => {
+          throw new Error(`Could not execute contract: ${err}`);
+        });
+      console.log(response);
+    
+    // 2. Query the public metadata
+   addMinters =  {
+      "set_minters": {
+        "minters": [
+          accAddress
+        ],
+         
+      }
+    }
+    console.log(`Query public addMinters data of token #${token_id}`);
+      response = await client
+        .execute(process.env.SECRET_NFT_CONTRACT, addMinters)
+        .catch((err) => {
+          throw new Error(`Could not execute contract: ${err}`);
+        });
+      console.log(response);
+
+    
+    
+    queryMsgApprove =  {
+      "set_global_approval": {
+        token_id: token_id,
+        "view_owner": "approve_token" ,
+        "view_private_metadata": "revoke_token" ,
+       
+      }
+    }
+    console.log(`Query public queryMsgApprove data of token #${token_id}`);
+      response = await client
+        .execute(process.env.SECRET_NFT_CONTRACT, queryMsgApprove)
+        .catch((err) => {
+          throw new Error(`Could not execute contract: ${err}`);
+        });
+      console.log(response);
+
+
+      queryMsg = {
+        royalty_info: {
+            token_id: token_id,
+          },
+        };
+        
     
       console.log(`Query public data of token #${token_id}`);
       response = await client
@@ -94,10 +145,11 @@ const {
         .catch((err) => {
           throw new Error(`Could not execute contract: ${err}`);
         });
-      console.log("response: ", response);
+      console.log(response.royalty_info.royalty_info.royalties);
+     // return;
   
     // 3. Query the token dossier
-    queryMsg = {
+     queryMsg = {
         nft_dossier: {
           token_id: token_id,
         },
@@ -113,10 +165,12 @@ const {
      const view_key = process.env.SECRET_VIEWING_KEY;
   
     // 4. Set our viewing key
+    const private_key = process.env.SECRET_VIEWING_KEY;
+
     const handleMsg = {
         
         set_viewing_key: {
-          key: process.env.SECRET_VIEWING_KEY,
+          key: private_key,
         },
       };
     

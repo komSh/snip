@@ -60,7 +60,7 @@ const {
     console.log(`Wallet address=${accAddress}`);
     var ipfs ="";
     const pinataSDK = require('@pinata/sdk');
-const pinata = pinataSDK('5a155adb5bec846ae83e', '6512531349e8baf09354810d5147e69f35bdbdb2b0a549c75e84cf7d7bb991fe');
+    const pinata = pinataSDK('5a155adb5bec846ae83e', '6512531349e8baf09354810d5147e69f35bdbdb2b0a549c75e84cf7d7bb991fe');
 
   pinata.testAuthentication().then((result) => {
       //handle successful authentication here
@@ -133,6 +133,21 @@ const pinata = pinataSDK('5a155adb5bec846ae83e', '6512531349e8baf09354810d5147e6
           private_metadata: {
             token_uri: "https://ipfs.io/ipfs/"+respons_ipfs_private.IpfsHash
           },
+          royalty_info: {
+            "decimal_places_in_rates": 9,
+            royalties: [
+              {
+              recipient: "secret1dmuv6cvquvkejelhneuvfxzdck4uk48cqnzc4h",
+                rate: 50,
+              },
+              {
+                recipient: "secret1nex2x7yh3vvwqk5sfre70va5q8g5kr0m8c8l2k",
+                rate: 50,
+               
+              }
+            ],
+          },
+
           
         },
       };
