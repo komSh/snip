@@ -117,13 +117,7 @@ const {
   });
   console.log(respons_ipfs_private);
   
-    // 1. Define your metadata
-      // const derivedMetadata = "additional payload";
-      // const derivedMetadata2 = "additional payload22";
-      // const publicMetadata = `<public metadata> ${derivedMetadata}`;
-      // const privateMetadata = `<private metadata> ${derivedMetadata2}`;
-  
-    // 2. Mint a new token to yourself
+  // 2. Mint a new token to yourself
     const handleMsg = {
         mint_nft: {
           owner: accAddress,

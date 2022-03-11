@@ -73,7 +73,8 @@ const {
           throw new Error(`Could not execute contract: ${err}`);
         });
       console.log("response: ", response);
-    const token_id = response.token_list.tokens[0];
+
+      const token_id = response.token_list.tokens[0];
   
     if (response.token_list.tokens.length == 0)
       console.log(
@@ -81,6 +82,7 @@ const {
       );
 
    // 2.Approve the token 
+
       query_message = {
         "approve": {
           "spender": "secret1dmuv6cvquvkejelhneuvfxzdck4uk48cqnzc4h",
@@ -114,7 +116,8 @@ const {
       console.log(response);
 
     
-     // 3.set global approval
+   // 3.set global approval
+
     queryMsgApprove =  {
       "set_global_approval": {
         token_id: token_id,
@@ -132,7 +135,8 @@ const {
       console.log(response);
 
 
-  
+   // 3.Register Receive Nft
+
       register_receive_nft = {
         "register_receive_nft": {
           "code_hash": process.env.SECRET_NFT_CONTRACT,
@@ -149,21 +153,25 @@ const {
         });
       console.log(response);
 
-      //receive nFT
-      RECEIVEnft = {
+    //4 .Receive nFT
+      receiveNFT = {
         "receive_nft": {
           "sender": "secret1j7hkdup8e7mxlqm75kxlhyr9e559hzuh226nlj" ,
           "token_id": token_id,
         
         }
       }
-      console.log(`Query public data of  RECEIVEnft token #${token_id}`);
+
+      console.log(`Query public data of  receiveNFT token #${token_id}`);
       response = await client
-        .execute(process.env.SECRET_NFT_CONTRACT, RECEIVEnft)
+        .execute(process.env.SECRET_NFT_CONTRACT, receiveNFT)
         .catch((err) => {
           throw new Error(`Could not execute contract: ${err}`);
         });
+
       console.log(response);
+    
+      //4 Set Royalty Info:
 
       setRoyaltyinfo = {
         "set_royalty_info": {
@@ -189,7 +197,8 @@ const {
           throw new Error(`Could not execute contract: ${err}`);
         });
       console.log(response);
-    // 4.query royalty info 
+
+    // query royalty info 
       queryMsg = {
         royalty_info: {
             token_id,
@@ -206,7 +215,7 @@ const {
       console.log(response.royalty_info.royalty_info.royalties);
     
   
-    // 3. Query the token dossier
+    //  Query the token dossier
      queryMsg = {
         nft_dossier: {
           token_id: token_id,
@@ -240,7 +249,7 @@ const {
         });
       console.log('response: ', response);
   
-    // 5. Query the dossier again
+    // Query the dossier again
     queryMsg = {
         nft_dossier: {
           token_id: token_id,
