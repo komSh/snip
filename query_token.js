@@ -73,14 +73,14 @@ const {
           throw new Error(`Could not execute contract: ${err}`);
         });
       console.log("response: ", response);
-    const token_id = response.token_list.tokens[6];
+    const token_id = response.token_list.tokens[0];
   
     if (response.token_list.tokens.length == 0)
       console.log(
         'No token was found for you account, make sure that the minting step completed successfully'
       );
 
-   
+   // 2.Approve the token 
       query_message = {
         "approve": {
           "spender": "secret1dmuv6cvquvkejelhneuvfxzdck4uk48cqnzc4h",
@@ -96,7 +96,7 @@ const {
         });
       console.log(response);
     
-    // 2. Query the public metadata
+  // 3.add minter
    addMinters =  {
       "set_minters": {
         "minters": [
@@ -114,7 +114,7 @@ const {
       console.log(response);
 
     
-    
+     // 3.set global approval
     queryMsgApprove =  {
       "set_global_approval": {
         token_id: token_id,
@@ -132,9 +132,67 @@ const {
       console.log(response);
 
 
+  
+      register_receive_nft = {
+        "register_receive_nft": {
+          "code_hash": process.env.SECRET_NFT_CONTRACT,
+          "also_implements_batch_receive_nft": true
+    
+        }
+      }
+
+      console.log(`Query public register_receive_nft data of token #${token_id}`);
+      response = await client
+        .execute(process.env.SECRET_NFT_CONTRACT, register_receive_nft)
+        .catch((err) => {
+          throw new Error(`Could not execute contract: ${err}`);
+        });
+      console.log(response);
+
+      //receive nFT
+      RECEIVEnft = {
+        "receive_nft": {
+          "sender": "secret1j7hkdup8e7mxlqm75kxlhyr9e559hzuh226nlj" ,
+          "token_id": token_id,
+        
+        }
+      }
+      console.log(`Query public data of  RECEIVEnft token #${token_id}`);
+      response = await client
+        .execute(process.env.SECRET_NFT_CONTRACT, RECEIVEnft)
+        .catch((err) => {
+          throw new Error(`Could not execute contract: ${err}`);
+        });
+      console.log(response);
+
+      setRoyaltyinfo = {
+        "set_royalty_info": {
+          "token_id": token_id,
+          "royalty_info": {
+            "decimal_places_in_rates": 4,
+            "royalties": [
+              {
+                "recipient": "secret1nex2x7yh3vvwqk5sfre70va5q8g5kr0m8c8l2k",
+                "rate": 100,
+              },
+             
+            ],
+          },
+          
+        }
+      }
+
+      console.log(`set royalty  #${token_id}`);
+      response = await client
+        .execute(process.env.SECRET_NFT_CONTRACT, setRoyaltyinfo)
+        .catch((err) => {
+          throw new Error(`Could not execute contract: ${err}`);
+        });
+      console.log(response);
+    // 4.query royalty info 
       queryMsg = {
         royalty_info: {
-            token_id: token_id,
+            token_id,
           },
         };
         
@@ -146,7 +204,7 @@ const {
           throw new Error(`Could not execute contract: ${err}`);
         });
       console.log(response.royalty_info.royalty_info.royalties);
-     // return;
+    
   
     // 3. Query the token dossier
      queryMsg = {
