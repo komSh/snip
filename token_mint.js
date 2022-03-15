@@ -8,7 +8,7 @@ const {
   
   // Requiring the dotenv package in this way
   // lets us use environment variables defined in .env
-  require("dotenv").config();
+  require('dotenv').config();
   
   const customFees = {
     upload: {
@@ -122,10 +122,10 @@ const {
         mint_nft: {
           owner: accAddress,
           public_metadata: {
-            token_uri: "https://ipfs.io/ipfs/"+respons_ipfs_public.IpfsHash
+            //token_uri: "https://ipfs.io/ipfs/"+respons_ipfs_public.IpfsHash
           },
           private_metadata: {
-            token_uri: "https://ipfs.io/ipfs/"+respons_ipfs_private.IpfsHash
+           // token_uri: "https://ipfs.io/ipfs/"+respons_ipfs_private.IpfsHash
           },
           royalty_info: {
             "decimal_places_in_rates": 9,
