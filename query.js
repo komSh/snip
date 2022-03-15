@@ -279,6 +279,7 @@ const {
 
       // 6. Send NFT
       receiveNFT = {
+        
         "batch_receive_nft": {
           "sender": process.env.SECRET_NFT_CONTRACT1,
           "from": process.env.SECRET_NFT_CONTRACT1,
